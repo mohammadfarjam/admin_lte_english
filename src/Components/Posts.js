@@ -1,15 +1,33 @@
 import React, {Component} from 'react';
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 class Posts extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state={
+        posts:[],
+    }
+
+    componentDidMount() {
+       axios.get('https://jsonplaceholder.typicode.com/posts').then(
+           response=>{
+        this.setState({posts :response.data})
+           }
+       )
+    }
+
     render() {
         return (
-            <div className="row w-100 mx-auto pt-3 h-100">
-                <div className="col-12">
+
+                <div className="col-12 pt-3">
                     <div className="card">
                         <div className="card-header">
                             <h3 className="card-title">Posts</h3>
                             <div className="card-tools">
-                                <div className="input-group input-group-sm" style={{width: 150}}>
+                                <div className="input-group input-group-sm" style={{width: 250}}>
                                     <input type="text" name="table_search" className="form-control float-right" placeholder="Search" />
                                     <div className="input-group-append">
                                         <button type="submit" className="btn btn-default"><i className="fas fa-search" /></button>
@@ -22,42 +40,23 @@ class Posts extends Component {
                             <table className="table table-hover text-nowrap">
                                 <thead>
                                 <tr className='bg-gradient-green'>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Description</th>
+                                    <th className='text-center'>ID</th>
+                                    <th className='text-center'>Title</th>
+                                    <th className='text-center'>Description</th>
+                                    <th className='text-center'>View</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>183</td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="tag tag-success">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>219</td>
-                                    <td>Alexander Pierce</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="tag tag-warning">Pending</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>657</td>
-                                    <td>Bob Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="tag tag-primary">Approved</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
-                                <tr>
-                                    <td>175</td>
-                                    <td>Mike Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td><span className="tag tag-danger">Denied</span></td>
-                                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                                </tr>
+                                {this.state.posts.slice(0,5).map((post)=>(
+                                    <tr key={post.id}>
+                                        <td className='text-center'>{post.userId}</td>
+                                        <td className='text-center'>{post.title.substring(0,50)}...</td>
+                                        <td className='text-center'>{post.body.substring(0,50)}...</td>
+                                        <td className='text-center'><Link to={`showPost/${post.id}`}><button className='btn btn-warning'>View</button></Link></td>
+
+                                    </tr>
+                                ))}
+
                                 </tbody>
                             </table>
                         </div>
@@ -65,7 +64,7 @@ class Posts extends Component {
                     </div>
                     {/* /.card */}
                 </div>
-            </div>
+
         );
     }
 }

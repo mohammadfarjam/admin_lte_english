@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, NavLink, Route} from "react-router-dom";
+import {BrowserRouter, Link, NavLink, Route} from "react-router-dom";
 import Dashboard from "./Dashboard";
 import {Redirect} from "react-router";
 import Users from "./Users";
@@ -16,6 +16,17 @@ class Menu extends Component {
             activeMenu:value,
         })
     }
+
+
+    componentWillMount() {
+        let address_page = window.location.pathname;
+        if(address_page === "/posts"){
+            this.activeMenu('post')
+        }
+    }
+
+
+
 
     render() {
         return (
@@ -44,7 +55,7 @@ class Menu extends Component {
          with font-awesome or any other icon font library */}
 
                                 <li className="nav-item">
-                                    <NavLink to="/dashboard" className="nav-link">
+                                    <NavLink to="/dashboard" onClick={this.activeMenu.bind(this,'dashboard')} className={this.state.activeMenu === 'dashboard' ? 'nav-link active' : 'nav-link' }>
                                         <i className="nav-icon fas fa-tachometer-alt" />
                                         <p>
                                             Dashboard
@@ -53,7 +64,7 @@ class Menu extends Component {
                                 </li>
 
                                 <li className="nav-item">
-                                    <NavLink to="/users" onClick={this.activeMenu.bind(this,'users')} className="nav-link">
+                                    <NavLink to="/users" onClick={this.activeMenu.bind(this,'users')} className={this.state.activeMenu === 'users' ? 'nav-link active' : 'nav-link' }>
                                         <i className="nav-icon fas fa-user-alt" />
                                         <p>
                                            Users
@@ -62,15 +73,15 @@ class Menu extends Component {
                                 </li>
 
 
-                                <li className="nav-item has-treeview">
-                                    <a href="#" className={this.state.activeMenu === 'post' ? 'nav-link active' :'nav-link'}>
+                                <li className={this.state.activeMenu === 'post' ? 'nav-item has-treeview menu-open' :'nav-item has-treeview'}>
+                                    <Link to='#' onClick={this.activeMenu.bind(this,'post')} className={this.state.activeMenu === 'post' ? 'nav-link active' :'nav-link'}>
                                         <i className="nav-icon fas fa-paste"></i>
                                         <p>
                                             Posts
                                             <i className="right fas fa-angle-left" />
                                         </p>
-                                    </a>
-                                    <ul className="nav nav-treeview">
+                                    </Link>
+                                    <ul className={this.state.activeMenu ===  'post'  ?'nav nav-treeview' : 'd-none'}>
                                         <li className="nav-item">
                                             <a href="./index.html" className="nav-link">
                                                 <i className="nav-icon fas fa-plus-circle"></i>
@@ -86,6 +97,31 @@ class Menu extends Component {
                                     </ul>
                                 </li>
 
+
+
+                                <li className="nav-item has-treeview">
+                                    <a href="#" className={this.state.activeMenu === 'category' ? 'nav-link active' :'nav-link'}>
+                                        <i className="nav-icon fas fa-paste"></i>
+                                        <p>
+                                            Category
+                                            <i className="right fas fa-angle-left" />
+                                        </p>
+                                    </a>
+                                    <ul className="nav nav-treeview">
+                                        <li className="nav-item">
+                                            <a href="./index.html" className="nav-link">
+                                                <i className="nav-icon fas fa-plus-circle"></i>
+                                                <p>Add Category</p>
+                                            </a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <NavLink to="category" onClick={this.activeMenu.bind(this,'category')} className="nav-link">
+                                                <i className="nav-icon fas fa-mail-bulk"></i>
+                                                <p>All Category</p>
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                </li>
 
                             </ul>
                         </nav>
