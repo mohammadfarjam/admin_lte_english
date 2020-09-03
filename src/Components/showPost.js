@@ -21,18 +21,15 @@ componentDidMount() {
         return (
 <div className='col-12 bg-white pt-3 pb-5'>
     <div className='form-group col-6 offset-md-1'>
-        <label htmlFor='title'>title :</label>
+        <label htmlFor='title'>Title :</label>
         <input className='form-control' name='title' value={this.state.showPost.title} />
     </div>
 
 
     <div className='form-group col-6 offset-md-1'>
-        <label htmlFor='title'>description :</label>
-        <textarea className=' form-control' value=  {this.state.showPost.body}>
-
-        </textarea>
+        <label htmlFor='title'>Description :</label>
+        <textarea className='form-control'  style={{minHeight:'200px'}} value={this.state.showPost.body}></textarea>
     </div>
-    {/*<p>{this.state.showPost.title}</p>*/}
 </div>
 
 

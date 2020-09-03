@@ -5,6 +5,8 @@ import {Redirect} from "react-router";
 import Users from "./Users";
 import Posts from "./Posts";
 import showPost from "./showPost";
+import Newpost from "./Newpost";
+
 
 class Content extends Component {
     render() {
@@ -18,6 +20,7 @@ class Content extends Component {
                             <Route path='/users'  component={Users}/>
                             <Route path='/posts'   component={Posts}/>
                             <Route path='/showPost/:id'  component={showPost}/>
+                            <Route path='/newpost'  component={Newpost}/>
 
                         </Switch>
                     </div>
