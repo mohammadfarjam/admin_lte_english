@@ -11,12 +11,21 @@ class Posts extends Component {
     }
 
 
-    componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts').then(
-            response => {
-                this.setState({posts: response.data})
-            }
-        )
+   async componentDidMount() {
+        try{
+         const data=await axios.get('https://jsonplaceholder.typicode.com/postshy')
+       if (data.status === 200){
+           this.setState({posts: data.data})
+       }else{
+           throw 'FAIL'
+       }
+
+        }catch (e) {
+            console.log(e)
+            alert(e)
+        }
+
+
     }
 
 deletePost=(id)=>{
